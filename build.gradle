@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'war'
 }
 
 group 'pl.wiktorowski'
@@ -12,6 +12,9 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.22'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.3'
 }
 
 test {

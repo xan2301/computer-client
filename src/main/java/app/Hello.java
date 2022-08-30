@@ -1,6 +1,8 @@
 package app;
 
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +16,8 @@ import java.util.stream.Stream;
 public class Hello {
 
 
-    @GetMapping("/do")
-    public void sendDataToElectronicApps() {
+    @GetMapping("/getElectronicData")
+    public void getElectronicData() {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -31,5 +33,46 @@ public class Hello {
 
     }
 
+    @GetMapping("/deleteElectronicData")
+    public void deleteElectronicData() {
 
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                "http://localhost:8080/api/computers?id=6",
+                HttpMethod.DELETE,
+                null,
+                Boolean.class);
+
+
+        System.out.println(responseEntity.getBody());
+
+
+    }
+
+    @GetMapping("/addElectronicData")
+    public void addElectronicData() {
+
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        String objToSent = "  {\n" +
+                "        \"id\": 6,\n" +
+                "        \"ddrType\": \"DDR6\",\n" +
+                "        \"mhz\": 6000,\n" +
+                "        \"memorySize\": 60\n" +
+                "    }";
+
+        HttpEntity httpEntity = new HttpEntity(objToSent, httpHeaders);
+
+
+        restTemplate.exchange(
+                "http://localhost:8080/api/computers",
+                HttpMethod.POST,
+                httpEntity,
+                void.class);
+
+    }
 }
